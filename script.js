@@ -29,7 +29,8 @@ formElement.addEventListener('submit', function(event) {
 
 // save the entered text value from the input within a variable
 // NOTE: any information entered into a form element will always be available at the value property
-const userToDo = inputElement.value;
+// whitespace error-handling solution: use the string trim()method the TRIM any additional whitespace from the input value
+const userToDo = inputElement.value.trim();
 // console.log(userToDo);
 
 // NOTE: form inputs ALWAYS return values as strings
@@ -37,6 +38,7 @@ const userToDo = inputElement.value;
 
 // IF the user submits a todo (check whether the value of the input it NOT empty) then:
 // STRETCH ERROR-HANDLING GOAL: how do we avoid adding empty strings with multiple space characters (probably RegEx)
+
 if (userToDo !== "") {
 
     console.log(userToDo);
@@ -68,3 +70,25 @@ inputElement.value = "";
 })
 
 // 3) KENZIE'S STEP: how do we track when the task is done?
+// query the DOM for our icon and save the returned DOM node within a variable
+// THIS WILL NOT WORK BECAUSE THIS CODE WILL RUN AS SOON AS THE PAGE / APP LOADS AND THE ICON DOES NOT EXIST YET!!!
+
+// EVENT DELEGATION TIME!
+// add a click event listener to the existing parent element on the page and then figure out how to specifically target the icon which was clicked on
+// we can use the event object to find out exactly where the event occured and hone in on that specific icon!
+//add a click event listener and attach it to our icon
+ulElement.addEventListener('click', function(event){
+
+    // only when the icon is clicked do we want to update the checkbox to be unchecked!
+    // isolate where the click event occurs - ONLY if it occurs on the icon do we want to run the code to update "checking" the checkbox (AKA updated the rendered FA icon)
+    if (event.target.tagName === 'I'){
+
+        const iElement = event.target
+        
+        // toggle the fontawesome icon class so if it's checked it should be unchecked and vice versa!
+        iElement.classList.toggle('fa-square');
+        iElement.classList.toggle('fa-square-check  ');
+
+    }
+})
+
